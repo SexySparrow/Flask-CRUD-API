@@ -14,19 +14,19 @@ if __name__ == '__main__':
 class Transport(db.Model):
     __tablename__ = 'cargo'
     id = db.Column(db.Integer, primary_key = True)
-    transport_name = db. Column(db.String(100), nullable = False)
-    transport_phone_number = db. Column(db.String(10), nullable = False)
-    transport_truck_number = db. Column(db.String(8), nullable = False)
-    transport_cargo_type = db.Column(db.String(50), nullable = False)
-    transport_cargo_description = db.Column(db.String(400), nullable = False)
-    transport_departure_time = db.Column(db.Date(), nullable = False)
-    transport_departure_location = db.Column(db.String(100), nullable = False)
-    transport_arrival_location = db.Column(db.String(100), nullable = False)
-    transport_weight = db.Column(db.Integer, nullable = True)
+    name = db. Column(db.String(100), nullable = False)
+    phone_number = db. Column(db.String(10), nullable = False)
+    truck_number = db. Column(db.String(8), nullable = False)
+    cargo_type = db.Column(db.String(50), nullable = False)
+    cargo_description = db.Column(db.String(400), nullable = False)
+    departure_time = db.Column(db.Date(), nullable = False)
+    departure_location = db.Column(db.String(100), nullable = False)
+    arrival_location = db.Column(db.String(100), nullable = False)
+    weight = db.Column(db.Integer, nullable = True)
 
 
     def __repr__(self):
-        return "<Transport %r>" % self.transport_name
+        return "<Transport %r>" % self.name
 
 
 @app.route('/')
@@ -39,20 +39,20 @@ def index():
 def create_transport():
     cargo_data = request.json
 
-    transport_name = cargo_data['transport_name']
-    transport_phone_number = cargo_data['transport_phone_number']
-    transport_truck_number = cargo_data['transport_truck_number']
-    transport_departure_time = cargo_data['transport_departure_time']
-    transport_departure_location = cargo_data['transport_departure_location']
-    transport_arrival_location = cargo_data['transport_arrival_location']
-    transport_weight = cargo_data['transport_weight']
-    transport_cargo_type = cargo_data['transport_cargo_type']
+    name = cargo_data['name']
+    phone_number = cargo_data['phone_number']
+    truck_number = cargo_data['truck_number']
+    departure_time = cargo_data['departure_time']
+    departure_location = cargo_data['departure_location']
+    arrival_location = cargo_data['arrival_location']
+    weight = cargo_data['weight']
+    cargo_type = cargo_data['cargo_type']
 
-    transport_cargo_description = cargo_data['transport_cargo_description']
-    transport = Transport(transport_name = transport_name , transport_phone_number = transport_phone_number,
-    transport_truck_number = transport_truck_number, transport_departure_time = transport_departure_time,
-    transport_departure_location = transport_departure_location, transport_arrival_location = transport_arrival_location,
-    transport_weight = transport_weight, transport_cargo_type = transport_cargo_type, transport_cargo_description = transport_cargo_description)
+    cargo_description = cargo_data['cargo_description']
+    transport = Transport(name =name ,phone_number =phone_number,
+    truck_number =truck_number,departure_time =departure_time,
+    departure_location =departure_location,arrival_location =arrival_location,
+    weight =weight,cargo_type =cargo_type,cargo_description =cargo_description)
     db.session.add(transport)
     db.session.commit()
     
@@ -68,15 +68,15 @@ def get_transports():
      for transport in transports:
           results = {
                     "id":transport.id,
-                    "transport_name":transport.transport_name,
-                    "transport_phone_number":transport.transport_phone_number,
-                    "transport_truck_number":transport.transport_truck_number,
-                    "transport_departure_time":transport.transport_departure_time,
-                    "transport_departure_location":transport.transport_departure_location,
-                    "transport_arrival_location":transport.transport_arrival_location,
-                    "transport_weight":transport.transport_weight,
-                    "transport_cargo_type":transport.transport_cargo_type,
-                    "transport_cargo_description":transport.transport_cargo_description }
+                    "name":transport.name,
+                    "phone_number":transport.phone_number,
+                    "truck_number":transport.truck_number,
+                    "departure_time":transport.departure_time,
+                    "departure_location":transport.departure_location,
+                    "arrival_location":transport.arrival_location,
+                    "weight":transport.weight,
+                    "cargo_type":transport.cargo_type,
+                    "cargo_description":transport.cargo_description }
           all_transports.append(results)
 
      return jsonify(
@@ -97,15 +97,15 @@ def get_transport(id):
     else:
         result = {
                   "id":transport.id,
-                  "transport_name":transport.transport_name,
-                  "transport_phone_number":transport.transport_phone_number,
-                  "transport_truck_number":transport.transport_truck_number,
-                  "transport_departure_time":transport.transport_departure_time,
-                  "transport_departure_location":transport.transport_departure_location,
-                  "transport_arrival_location":transport.transport_arrival_location,
-                  "transport_weight":transport.transport_weight,
-                  "transport_cargo_type":transport.transport_cargo_type,
-                  "transport_cargo_description":transport.transport_cargo_description }
+                  "name":transport.name,
+                  "phone_number":transport.phone_number,
+                  "truck_number":transport.truck_number,
+                  "departure_time":transport.departure_time,
+                  "departure_location":transport.departure_location,
+                  "arrival_location":transport.arrival_location,
+                  "weight":transport.weight,
+                  "cargo_type":transport.cargo_type,
+                  "cargo_description":transport.cargo_description }
         return jsonify(
                 {
                 "success": True,
@@ -121,14 +121,14 @@ def update_transport(id):
         abort(404)
     else:  
         cargo_data = request.json
-        transport.transport_name = cargo_data['transport_name']
-        transport.transport_phone_number = cargo_data['transport_phone_number']
-        transport.transport_truck_number = cargo_data['transport_truck_number']
-        transport.transport_departure_time = cargo_data['transport_departure_time']
-        transport.transport_departure_location = cargo_data['transport_departure_location']
-        transport.transport_arrival_location = cargo_data['transport_arrival_location']
-        transport.transport_weight = cargo_data['transport_weight']
-        transport.transport_cargo_type = cargo_data['transport_cargo_type']
+        transport.name = cargo_data['name']
+        transport.phone_number = cargo_data['phone_number']
+        transport.truck_number = cargo_data['truck_number']
+        transport.departure_time = cargo_data['departure_time']
+        transport.departure_location = cargo_data['departure_location']
+        transport.arrival_location = cargo_data['arrival_location']
+        transport.weight = cargo_data['weight']
+        transport.cargo_type = cargo_data['cargo_type']
         db.session.add(transport)
         db.session.commit()
         return jsonify({"success": True, "response": "Transport details updated"})
